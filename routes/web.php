@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\HomeController;
+use App\Mail\MessageMail;
+use Illuminate\Support\Facades\Mail;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,3 +25,9 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::resource('/task', TaskController::class);
+
+Route::get('/mail', function(){
+    return new MessageMail();
+    // Mail::to('luiz.santos85@gmail.com')->send(new MessageMail());
+    // return 'Email enviado.';
+});
