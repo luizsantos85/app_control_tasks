@@ -21,10 +21,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]); //rotas com validações de email
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::resource('/task', TaskController::class);
+Route::get('/home', [HomeController::class, 'index'])->middleware('verified')->name('home');
+Route::resource('/task', TaskController::class)->middleware('verified');
 
 Route::get('/mail', function(){
     return new MessageMail();
