@@ -21,7 +21,6 @@ class TaskController extends Controller
     {
         $user = auth()->user()->email;
         return "Email: ${user}";
-
     }
 
     /**
@@ -31,7 +30,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        return view('task.create');
     }
 
     /**
@@ -42,7 +41,8 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $task = Task::create($request->all());
+        return redirect()->route('task.show', ['task' => $task->id]);
     }
 
     /**
@@ -53,7 +53,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        dd($task->getAttributes());
     }
 
     /**
