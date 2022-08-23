@@ -10,5 +10,5 @@ class Task extends Model
     use HasFactory;
 
     protected $table = 'task';
-    protected $fillable = ['tarefa', 'data_limite_conclusao'];
+    protected $fillable = ['tarefa', 'data_limite_conclusao','user_id'];
 }

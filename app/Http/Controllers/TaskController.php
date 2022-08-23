@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NovaTarefaMail;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
 {
@@ -41,7 +43,14 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $task = Task::create($request->all());
+        $data = $request->all('tarefa', 'data_limite_conclusao');
+        $data['user_id'] = auth()->user()->id;
+
+        $task = Task::create($data);
+
+        $userEmail = auth()->user()->email;
+        Mail::to($userEmail)->send(new NovaTarefaMail($task));
+
         return redirect()->route('task.show', ['task' => $task->id]);
     }
 
@@ -53,6 +62,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
+        return view('task.show', ['task' => $task]);
         dd($task->getAttributes());
     }
 
