@@ -22,8 +22,8 @@ class TaskController extends Controller
     public function index()
     {
         $userId = auth()->user()->id;
-        $tasks = Task::where('user_id', $userId)->get();
-        
+        $tasks = Task::where('user_id', $userId)->paginate(3);
+
         return view('task.index', ['tasks' => $tasks]);
     }
 
@@ -65,7 +65,6 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         return view('task.show', ['task' => $task]);
-        dd($task->getAttributes());
     }
 
     /**
@@ -76,7 +75,12 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        $userId = auth()->user()->id;
+        if ($task->user_id !== $userId) {
+            return view('acesso-negado');
+        }
+
+        return view('task.edit', ['task' => $task]);
     }
 
     /**
@@ -88,7 +92,13 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $userId = auth()->user()->id;
+        if ($task->user_id !== $userId) {
+            return view('acesso-negado');
+        }
+
+        $task->update($request->all());
+        return redirect()->route('task.index');
     }
 
     /**
@@ -99,6 +109,12 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $userId = auth()->user()->id;
+        if ($task->user_id !== $userId) {
+            return view('acesso-negado');
+        }
+
+        $task->delete();
+        return redirect()->route('task.index');
     }
 }
