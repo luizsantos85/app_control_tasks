@@ -7,7 +7,8 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     Tarefas
-                    <a href="{{route('task.create')}}" class="btn btn-primary text-light">Adicionar nova Tarefa</a>
+                    <a href="{{route('task.create')}}" class="btn btn-primary text-light">Adicionar Tarefa</a>
+                    <a href="{{route('exportaExcel')}}" class="btn btn-success text-light">Exportar Excel</a>
                 </div>
 
                 <div class="card-body">

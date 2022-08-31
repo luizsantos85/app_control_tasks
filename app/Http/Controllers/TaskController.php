@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TasksExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Mail\NovaTarefaMail;
 use App\Models\Task;
 use Illuminate\Http\Request;
@@ -116,5 +118,10 @@ class TaskController extends Controller
 
         $task->delete();
         return redirect()->route('task.index');
+    }
+
+    public function exportaExcel()
+    {
+        return Excel::download(new TasksExport, 'tasks.xlsx');
     }
 }

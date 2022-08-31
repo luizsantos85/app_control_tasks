@@ -24,6 +24,7 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]); //rotas com validações de email
 
 // Route::get('/home', [HomeController::class, 'index'])->middleware('verified')->name('home');
+Route::get('/task/export', [TaskController::class, 'exportaExcel'])->name('exportaExcel');
 Route::resource('/task', TaskController::class)->middleware('verified');
 
 Route::get('/mail', function(){
