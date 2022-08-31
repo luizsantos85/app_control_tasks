@@ -14,7 +14,7 @@
                             <label class="form-label">Tarefa</label>
                             <input type="text" class="form-control" name="tarefa">
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 ">
                             <label class="form-label">Data limite de conclusão</label>
                             <input type="date" class="form-control" name='data_limite_conclusao'>
                         </div>
