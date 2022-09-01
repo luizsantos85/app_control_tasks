@@ -11,4 +11,10 @@ class Task extends Model
 
     protected $table = 'task';
     protected $fillable = ['tarefa', 'data_limite_conclusao','user_id'];
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }
+

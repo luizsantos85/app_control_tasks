@@ -55,7 +55,8 @@ class TaskController extends Controller
         $userEmail = auth()->user()->email;
         Mail::to($userEmail)->send(new NovaTarefaMail($task));
 
-        return redirect()->route('task.show', ['task' => $task->id]);
+        // return redirect()->route('task.show', ['task' => $task->id]);
+        return redirect()->route('task.index');
     }
 
     /**
@@ -75,6 +76,7 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
+
     public function edit(Task $task)
     {
         $userId = auth()->user()->id;
@@ -92,6 +94,7 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, Task $task)
     {
         $userId = auth()->user()->id;
@@ -120,8 +123,31 @@ class TaskController extends Controller
         return redirect()->route('task.index');
     }
 
-    public function exportaExcel()
+
+    public function exportaExcel($ext)
     {
-        return Excel::download(new TasksExport, 'tasks.xlsx');
+        $fileName = 'task';
+
+        // switch ($ext) {
+        //     case 'xlsx':
+        //         $fileName .= "task.{$ext}";
+        //         break;
+        //     case 'csv':
+        //         $fileName .= "task.{$ext}";
+        //         break;
+        //     case 'pdf':
+        //         $fileName .= "task.{$ext}";
+        //         break;
+
+        //     default:
+        //         return redirect()->route('task.index');
+        //         break;
+        // }
+
+        if (in_array($ext, ['xlsx', 'csv', 'pdf'])) {
+            return Excel::download(new TasksExport, "{$fileName}.{$ext}");
+        }
+
+        return redirect()->route('task.index');
     }
 }

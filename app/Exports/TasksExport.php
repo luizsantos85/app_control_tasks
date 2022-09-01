@@ -12,6 +12,6 @@ class TasksExport implements FromCollection
     */
     public function collection()
     {
-        return Task::all();
+        return auth()->user()->tasks()->get();
     }
 }
